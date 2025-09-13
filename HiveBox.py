@@ -1,7 +1,16 @@
-def app_version():
-    return "v0.0.1"
+from flask import Flask
 
-def print_app_version():
-    print("HiveBox", app_version())
+app = Flask(__name__)
 
-print_app_version()
+app_version = "v0.0.2"
+
+@app.route("/version")
+def version():
+    return {"version": app_version}
+
+@app.route("/temperature")
+def temperature():
+    return {"temperature": 27.5}  #i dont  placeholder
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
