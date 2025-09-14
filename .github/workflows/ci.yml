@@ -20,16 +20,17 @@ jobs:
               with:
                 python-version: '3.11'
 
-            - name: Install lint tools
+            - name: Install python lint tools
               run: |
                 pip install flake8
-                sudo apt-get update && sudo apt-get install -y hadolint
 
             - name: Lint Python code with flake8
               run: flake8 HiveBox.py
 
             - name: Lint Dockerfile with hadolint
-              run: hadolint Dockerfile
+              uses: hadolint/hadolint-action@v3.1.0
+              with:
+                dockerfile: Dockerfile
 
             - name: Build Docker image
               run: docker build -t hivebox:0.0.2 . 
