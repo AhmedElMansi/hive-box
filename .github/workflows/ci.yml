@@ -1,0 +1,35 @@
+name: HiveBox CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+    ci-pipeline:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.11'
+
+            - name: Install lint tools
+              run: |
+                pip install flake8
+                sudo apt-get update && sudo apt-get install -y hadolint
+
+            - name: Lint Python code with flake8
+              run: flake8 HiveBox.py
+
+            - name: Lint Dockerfile with hadolint
+              run: hadolint Dockerfile
+
+            - name: Build Docker image
+              run: docker build -t hivebox:0.0.2 . 
