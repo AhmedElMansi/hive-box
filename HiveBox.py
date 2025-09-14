@@ -10,7 +10,7 @@ def version():
 
 @app.route("/temperature")
 def temperature():
-    return {"temperature": 27.5}  #i dont  placeholder
+    return {"temperature": 27.5}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
