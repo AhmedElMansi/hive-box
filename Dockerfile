@@ -1,5 +1,6 @@
-FROM alpine:latest
-RUN apk add --no-cache python3 py3-pip
-WORKDIR /app
+FROM python:3
+WORKDIR /usr/src/app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY HiveBox.py .
-CMD ["python3", "/app/HiveBox.py"]
+CMD ["python", "/usr/src/app/HiveBox.py"]
