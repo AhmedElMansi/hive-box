@@ -44,7 +44,7 @@ jobs:
               run: |
                 response=$(curl -s http://127.0.0.1:5000/version | jq -r '.version')
                 if [ "$response" != "v0.0.2" ]; then
-                  echo "❌ Version mismatch! Expected v0.0.2 but got $response"
+                  echo "Version mismatch! Expected v0.0.2 but got $response"
                   exit 1
                 fi
-                echo "✅ /version endpoint returned: $response"
+                echo "/version endpoint returned: $response"
