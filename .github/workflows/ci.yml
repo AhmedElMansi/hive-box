@@ -33,4 +33,18 @@ jobs:
                 dockerfile: Dockerfile
 
             - name: Build Docker image
-              run: docker build -t hivebox:0.0.2 . 
+              run: docker build -t hivebox:0.0.2 .
+
+            - name: Run Docker container
+              run: |
+                docker run -d -p 5000:5000 --name hivebox hivebox:0.0.2
+                sleep 5
+
+            - name: Test /version endpoint
+              run: |
+                response=$(curl -s http://127.0.0.1:5000/version | jq -r '.version')
+                if [ "$response" != "v0.0.2" ]; then
+                  echo "❌ Version mismatch! Expected v0.0.2 but got $response"
+                  exit 1
+                fi
+                echo "✅ /version endpoint returned: $response"
